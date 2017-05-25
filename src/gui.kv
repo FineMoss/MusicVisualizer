@@ -1,0 +1,135 @@
+#: import main Gui
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+
+
+MainGUI:
+
+<MainGUI>:
+    orientation: "horizontal"
+    download_list: download_list_view
+    padding: 10
+
+    BoxLayout:
+        spacing: 10
+        orientation: "vertical"
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: '40dp'
+
+            Label:
+                text: root.downloadtext
+                color: root.downloadcolor
+                canvas.before:
+                    Color:
+                        rgba: 1,1,1,1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Button:
+                size_hint_x: None
+                text: 'Browse'
+                on_release: root.download_load()
+
+        #BoxLayout:
+        #    orientation: "horizontal"
+        #    size_hint_y: None
+        #    height: '40dp'
+
+        #    Label:
+        #        text: root.exporttext
+        #        color: root.exportcolor
+        #        canvas.before:
+        #            Color:
+        #                rgba: 1,1,1,1
+        #            Rectangle:
+        #                pos: self.pos
+        #                size: self.size
+
+         #   Button:
+         #       size_hint_x: None
+         #       text: 'Browse'
+         #       on_release: root.export_load()
+
+        FloatLayout:
+            Label:
+                text_size: self.size
+                id: stylelabel
+                text: root.stylename
+                color: root.stylecolor
+
+
+                font_size: 40
+                bold: 'true'
+                pos_hint: {"x": 0.1, "y": 0.1}
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            spacing: 20
+
+            Button:
+                text: 'Style 1'
+                on_release: root.pressstyle1()
+            Button:
+                text: 'Style 2'
+                on_release: root.pressstyle2()
+            Button:
+                text: 'Style 3'
+                on_release: root.pressstyle3()
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_x: 0.5
+
+        Label:
+            size_hint_y: None
+            height: '40dp'
+            text: "Finished Downloads Here"
+
+        ListView:
+            size_hint_y: 3
+            id: download_list_view
+            adapter:
+                ListAdapter(data=["Song1","Song2","Song3"], cls=main.DownloadList)
+        Button:
+            size_hint_y: None
+            text: "Launch Visual"
+            height: '30dp'
+
+
+        FloatLayout:
+            Button:
+                size_hint: None, None
+                height: '80dp'
+                width: '100dp'
+                text: "Go"
+                font_size: 30
+                color: 0.20, 0.80, 0.20 ,1
+                pos_hint: {"x": .65, "y": .05}
+                on_release: root.gopress()
+
+
+<DownloadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+<ListItemButton>:
+    selected_color: 0, 0.8, 1, 1
